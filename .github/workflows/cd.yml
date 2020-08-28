@@ -40,6 +40,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: changelog
         uses: scottbrenner/generate-changelog-action@master
         id: Changelog
