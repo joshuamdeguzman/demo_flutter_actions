@@ -34,7 +34,7 @@ jobs:
         with:
           name: release-apk
           path: build/app/outputs/apk/release/app-release.apk
-  create_apk:
+  create_release:
     needs: [build_apk]
     runs-on: ubuntu-latest
     steps:
