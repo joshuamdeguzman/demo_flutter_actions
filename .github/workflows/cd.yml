@@ -23,12 +23,12 @@ jobs:
       # - uses: webfactory/ssh-agent@v0.4.0
       #   with:
       #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      # - name: Run Flutter tasks
-      #   uses: subosito/flutter-action@v1
-      #   with:
-      #     flutter-version: '1.17.5'
-      # - run: flutter pub get
-      # - run: flutter build ios --release --no-codesign
+      - name: Run Flutter tasks
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '1.17.5'
+      - run: flutter pub get
+      - run: flutter build ios --release --no-codesign
       - name: Deploy iOS Beta to TestFlight via Fastlane
         uses: maierj/fastlane-action@v1.4.0
         with:
