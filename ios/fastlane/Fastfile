@@ -33,8 +33,8 @@ platform :ios do
   #   :PROVISIONING_PROFILE_SPECIFIER => PROVISIONING_PROFILE_SPECIFIER,
   #   :DEVELOPMENT_TEAM => DEVELOPER_PORTAL_TEAM_ID
   # }  
-  
-  lane :appstore_profiles do
+
+  lane :closed_beta do
     keychain_name = TEMP_KEYCHAIN_USER
     keychain_password = TEMP_KEYCHAIN_PASSWORD
     ensure_temp_keychain(keychain_name, keychain_password)
@@ -47,10 +47,7 @@ platform :ios do
       keychain_name: keychain_name,
       keychain_password: keychain_password 
     )
-  end
 
-  lane :build_beta do
-    appstore_profiles
     gym(
       configuration: "Release",
       workspace: "Runner.xcworkspace",
@@ -63,14 +60,7 @@ platform :ios do
         }
       }
     )
-  end
 
-  lane :post_deploy_beta do
-    keychain_name = TEMP_KEYCHAIN_USER
-    delete_temp_keychain(keychain_name)
-  end
-
-  lane :deploy_beta do
     pilot(
       apple_id: "#{DEVELOPER_APP_ID}",
       app_identifier: "#{DEVELOPER_APP_IDENTIFIER}",
@@ -80,11 +70,7 @@ platform :ios do
       notify_external_testers: false,
       ipa: "./Runner.ipa"
     )
-  end
-  
-  lane :beta do
-    build_beta
-    deploy_beta
-    post_deploy_beta
+    
+    delete_temp_keychain(keychain_name)
   end
 end
